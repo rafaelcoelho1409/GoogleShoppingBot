@@ -23,7 +23,7 @@
 
 ## Para rodar este bot em sua máquina:
 - baixe este repositório (pasta) em sua máquina. Você pode usar o seguinte comando no seu terminal de comando:
-git clone https://github.com/rafaelcoelho1409/GoogleShoppingBot.git
+> git clone https://github.com/rafaelcoelho1409/GoogleShoppingBot.git
 
 - escolha seu interpretador Python (python3, python3.x)
 
