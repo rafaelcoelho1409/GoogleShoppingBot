@@ -28,8 +28,8 @@ git clone https://github.com/rafaelcoelho1409/GoogleShoppingBot.git
 - escolha seu interpretador Python (python3, python3.x)
 
 - execute os seguintes comandos (para Linux):
-cd GoogleShoppingBot
-python3 GoogleShoppingBot.py
+> cd GoogleShoppingBot
+> python3 GoogleShoppingBot.py
 
 ## Melhorias futuras a serem feitas:
 - Incorporar este script python dentro de um container Docker
