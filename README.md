@@ -18,7 +18,6 @@
 - time
 - pandas
 - datetime
-- subprocess
 - os
 
 ## Para rodar este bot em sua máquina:
