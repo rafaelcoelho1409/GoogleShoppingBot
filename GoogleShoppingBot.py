@@ -1,11 +1,3 @@
-import os, sys
-if sys.platform in ['linux', 'linux2']:
-    os.system('pip3 install selenium webdriver-manager pandas datetime > /dev/null') #Linux
-elif sys.platform in ['win32', 'cygwin', 'msys']:
-    os.system('pip3 install selenium webdriver-manager pandas datetime > NUL') #Windows
-else:
-    raise('Sistema operacional não encontrado.')
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -14,7 +6,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
-import pandas as pd, datetime
+import os, pandas as pd, datetime
 
 class GSBot:
     """
@@ -26,14 +18,14 @@ class GSBot:
     _options: solicita que você escolha um nome para sua planilha de dados, o que você irá pesquisar no Google Shopping, e quantas páginas de pesquisa você deseja para coletar dados
     _get_url: acessa o site do Google Shopping. Se headless = True, o bot funcionará em modo oculto. Para visualizar o bot funcionando no navegador, troque para headless = False.
     _search: executa a pesquisa dentro do Google Shopping
-    _create_folder: cria uma pasta para armazenar o arquivo final em excel dentro
+    _create_folder: cria uma pasta para armazenar o arquivo final em csv dentro
     _leave_folder: sai da pasta onde é armazenado o arquivo csv com os dados
     _scraping_top_and_bottom: coleta os dados dos produtos nas barras de rolagem horizontal no topo e no final da página
     _scraping_body_*: coleta os dados dos produtos que estão no corpo da página
     _to_dataframe_*: importa os dados para dentro de dataframes
     _next_page: passa para a próxima pagina da pesquisa
     _concat_df: junta novas informações para dentro do dataframe a cada coleta de dados feita
-    _save_to_excel: salva o dataframe em formato xlsx
+    _save_to_csv: salva o dataframe em formato csv
     main: executa todas as funções construídas dentro da lógica da raspagem de dados
     """
     def __init__(self, headless = True):
@@ -43,10 +35,11 @@ class GSBot:
         self.dataframe = pd.DataFrame()
 
     def _options(self):
+        self.current_path = os.getcwd()
+        os.system('cd "{}"'.format(self.current_path))
         print('\n\n\n\n\n')
         print('Digite abaixo o produto que você deseja pesquisar:')
         self.search_words = input()
-        self.excel_filename = self.search_words.replace(' ', '_') + '.xlsx'
         print('Digite o número de páginas que você deseja para coletar dados:')
         self.num_pages = int(input())
 
@@ -66,13 +59,8 @@ class GSBot:
         except:
             pass
     
-    def _create_folder(self):
-        self.now = str(datetime.datetime.now())
-        os.system('mkdir "' + self.now + '"')
-        os.chdir(self.now)
-
-    def _leave_folder(self):
-        os.chdir('..')
+    def _create_filename(self):
+        self.now = '{}-'.format(self.search_words).replace(' ', '_') + str(datetime.datetime.now()) + '.csv'
 
     def _scraping_top_and_bottom(self):
         try:
@@ -150,9 +138,13 @@ class GSBot:
         self.df_aux = pd.concat([self.df1, self.df2, self.df3])
         self.dataframe = pd.concat([self.dataframe, self.df_aux])
 
-    def _save_to_excel(self):
+    def _save_to_csv(self):
         self.dataframe = self.dataframe[~self.dataframe.duplicated()]
-        self.dataframe.to_excel(self.excel_filename, engine = 'xlsxwriter', index = False)
+        self.dataframe.to_csv(self.now, index = False)
+    
+    def _print(self):
+        print(self.dataframe)
+        print('Nome do arquivo gerado: {}'.format(self.now))
 
     def _quit(self):
         self.driver.quit()
@@ -161,7 +153,7 @@ class GSBot:
         self._options()
         self._get_url()
         self._search()
-        self._create_folder()
+        self._create_filename()
         i = 0
         while i < self.num_pages:
             print('Coletando dados da página {}'.format(i + 1))
@@ -178,13 +170,9 @@ class GSBot:
                 break
             i += 1
         print('Dados coletados.')
-        self._save_to_excel()
-        self._leave_folder()
+        self._save_to_csv()
+        self._print()
         self._quit()
 
 bot = GSBot()
 bot.main()
-
-#from selenium import webdriver; from selenium.webdriver.common.by import By; driver = webdriver.Chrome(executable_path = './chromedriver')
-
-    

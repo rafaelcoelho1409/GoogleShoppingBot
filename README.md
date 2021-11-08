@@ -30,7 +30,49 @@
 > cd GoogleShoppingBot  
 > python3 GoogleShoppingBot.py
 
-## Melhorias futuras a serem feitas:
-- Incorporar este script python dentro de um container Docker
+## Executando o bot em Docker (para Linux):
+- Instale o docker em sua máquina local. Tutorial de instalação no site abaixo:
+> https://docs.docker.com/engine/install/
+
+- - Execute os seguintes comandos no seu terminal:
+- Construa a imagem Docker a partir do Dockerfile desta pasta:
+> sudo docker build -t gsbot:v1 .
+
+- Execute um novo contâiner a partir da imagem criada com o volume criado anexado a este contâiner:
+> sudo docker container run -it --name gsbot gsbot:v1
+
+- Digite a pesquisa que você deseja fazer (exemplo: samsung galaxy s21) e dê ENTER
+
+- Digite o número de páginas da pesquisa do google que você deseja que o bot faça a coleta dos produtos e preços
+
+- Copie o nome do arquivo gerado ao fim da execução (ARQUIVO_CSV)
+
+- Após isso, para poder abrir os arquivos em sua máquina local:
+> sudo docker container ls -a #copie o CONTAINER_ID do contâiner chamado 'gsbot'  
+> sudo docker cp CONTAINER_ID:/home/seluser/'ARQUIVO_CSV' .  
+(ex: sudo docker cp d5f466d18766:/home/seluser/'pe_de_cabra-2021-11-08 21:35:55.679724.csv' .)  
+> sudo -s #abre o modo root para acessar os arquivos  
+> cd seluser  
+> ls #liste a pasta seluser para visualizar os arquivos dentro  
+Copie o nome do arquivo csv (ARQUIVO_CSV) que aparece nessa listagem  
+> libreoffice ARQUIVO_CSV (ex: cama_elastica.csv) #Abre a tabela em csv no LibreOffice  
+> #dê CTRL-D para sair do modo root
+
+- Caso precise deletar a pasta extraída do contâiner 'gsbot':
+> sudo -s #modo root  
+> cd ..  
+> rm -r NOME_DA_PASTA #deleta a pasta  
+> #dê CTRL-D para sair do modo root
+
+- Para executar o bot novamente no mesmo contâiner:
+> sudo docker container start gsbot  
+> sudo docker container exec -it gsbot python3 GoogleShoppingBot.py
+
+- Para deletar o contâiner:
+> sudo docker container stop gsbot  
+> sudo docker container rm gsbot
+
+
+
 
 
