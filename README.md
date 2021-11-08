@@ -34,7 +34,7 @@
 - Instale o docker em sua máquina local. Tutorial de instalação no site abaixo:
 > https://docs.docker.com/engine/install/
 
-<h2> Execute os seguintes comandos no seu terminal:
+<h2> Execute os seguintes comandos no seu terminal: </h2>
 - Construa a imagem Docker a partir do Dockerfile desta pasta:
 > sudo docker build -t gsbot:v1 .
 
