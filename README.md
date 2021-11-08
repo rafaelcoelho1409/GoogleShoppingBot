@@ -34,7 +34,7 @@
 - Instale o docker em sua máquina local. Tutorial de instalação no site abaixo:
 > https://docs.docker.com/engine/install/
 
-- - Execute os seguintes comandos no seu terminal:
+<h2> Execute os seguintes comandos no seu terminal:
 - Construa a imagem Docker a partir do Dockerfile desta pasta:
 > sudo docker build -t gsbot:v1 .
 
@@ -58,10 +58,9 @@ Copie o nome do arquivo csv (ARQUIVO_CSV) que aparece nessa listagem
 > libreoffice ARQUIVO_CSV (ex: cama_elastica.csv) #Abre a tabela em csv no LibreOffice  
 > #dê CTRL-D para sair do modo root
 
-- Caso precise deletar a pasta extraída do contâiner 'gsbot':
+- Caso precise deletar o csv extraído do contâiner 'gsbot':
 > sudo -s #modo root  
-> cd ..  
-> rm -r NOME_DA_PASTA #deleta a pasta  
+> rm -r ARQUIVO_CSV #deleta o arquivo csv vindo do contâiner
 > #dê CTRL-D para sair do modo root
 
 - Para executar o bot novamente no mesmo contâiner:
