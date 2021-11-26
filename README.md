@@ -5,14 +5,11 @@
 
 ## Recursos utilizados:
 - Webdriver: ChromeDriver (Chrome)
-
 - Visual Studio Code
-
 - python3.8
-
 - pip3: gerenciador de pacotes python3.x
 
-## Pacotes do python usados para construir o bot:
+## Pacotes do Python usados para construir o bot:
 - Selenium Webdriver (selenium)
 - Webdriver Manager (webdriver_manager)
 - time
