@@ -10,7 +10,7 @@
 
 - python3.8
 
-- pip3: gerenciador de pacotes python3
+- pip3: gerenciador de pacotes python3.x
 
 ## Pacotes do python usados para construir o bot:
 - Selenium Webdriver (selenium)
