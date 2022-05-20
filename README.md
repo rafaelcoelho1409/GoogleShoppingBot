@@ -48,7 +48,7 @@
 - After, to open files in your local machine:
 > sudo docker container ls -a #copy the CONTAINER_ID from container called 'gsbot'  
 > sudo docker cp CONTAINER_ID:/home/seluser/'CSV_FILE' .  
-(ex: sudo docker cp d5f466d18766:/home/seluser/'smartphone-2021-11-08 21:35:55.679724.csv' .)  
+> #(ex: sudo docker cp d5f466d18766:/home/seluser/'smartphone-2021-11-08 21:35:55.679724.csv' .)  
 > sudo -s #open root mode to access files  
 > cd seluser  
 > ls #list 'seluser' folder files to see files into  
