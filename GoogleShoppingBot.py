@@ -8,26 +8,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 import os, pandas as pd, datetime
 
-class GSBot:
-    """
-    Argumentos:
-    headless (True/False): executar ou não em modo 'headless' (navegador sem cabeçalho, oculto)
-    os (Linux/Windows): sistema operacional
+#This bot was build to collect prices and products from Brazil, so some column names are maintained in Portuguese.
 
-    Funções:
-    _options: solicita que você escolha um nome para sua planilha de dados, o que você irá pesquisar no Google Shopping, e quantas páginas de pesquisa você deseja para coletar dados
-    _get_url: acessa o site do Google Shopping. Se headless = True, o bot funcionará em modo oculto. Para visualizar o bot funcionando no navegador, troque para headless = False.
-    _search: executa a pesquisa dentro do Google Shopping
-    _create_folder: cria uma pasta para armazenar o arquivo final em csv dentro
-    _leave_folder: sai da pasta onde é armazenado o arquivo csv com os dados
-    _scraping_top_and_bottom: coleta os dados dos produtos nas barras de rolagem horizontal no topo e no final da página
-    _scraping_body_*: coleta os dados dos produtos que estão no corpo da página
-    _to_dataframe_*: importa os dados para dentro de dataframes
-    _next_page: passa para a próxima pagina da pesquisa
-    _concat_df: junta novas informações para dentro do dataframe a cada coleta de dados feita
-    _save_to_csv: salva o dataframe em formato csv
-    main: executa todas as funções construídas dentro da lógica da raspagem de dados
-    """
+class GSBot:
     def __init__(self, headless = True):
         self.headless = headless
         self.options = Options()
@@ -38,9 +21,9 @@ class GSBot:
         self.current_path = os.getcwd()
         os.system('cd "{}"'.format(self.current_path))
         print('\n\n\n\n\n')
-        print('Digite abaixo o produto que você deseja pesquisar:')
+        print('Type below the product you want to search:')
         self.search_words = input()
-        print('Digite o número de páginas que você deseja para coletar dados:')
+        print('Type the number of pages you want to collect data from:')
         self.num_pages = int(input())
 
     def _get_url(self):
@@ -69,7 +52,7 @@ class GSBot:
             self.prices = self.driver.find_elements(By.XPATH, '//span[@class = "T14wmb"]')
             self.sellers = self.driver.find_elements(By.XPATH, '//div[@class = "sh-np__seller-container"]')
             self.links = self.driver.find_elements(By.XPATH, '//a[@class = "shntl sh-np__click-target"]')
-            self.df1 = pd.DataFrame() #dataframe com os preços dos itens nas barras de rolagem superior e inferior
+            self.df1 = pd.DataFrame() #dataframe with items prices on superior and inferior scroll bars on the page
             self.df1['Nome do produto'] = [self.products[i].text for i in range(len(self.products))]
             self.df1['Preço (R$)'] = [self.prices[i].text for i in range(len(self.prices))]
             self.df1[self.df1['Preço (R$)'] == 'Recondicionado por'] = '-'
@@ -106,7 +89,7 @@ class GSBot:
 
     def _to_dataframe(self):
         try:
-            self.df2 = pd.DataFrame() #dataframe com os preços dos itens no corpo da página
+            self.df2 = pd.DataFrame() #dataframe with items prices on page body
             self.df2['Nome do produto'] = [self.products2[i].text for i in range(len(self.products2))]
             self.df2['Preço (R$)'] = [self.prices2[i].text for i in range(len(self.prices2))]
             self.df2['Preço (R$)'] = self.df2['Preço (R$)'].apply(lambda x: x.replace('R$', ''))
@@ -118,7 +101,7 @@ class GSBot:
 
     def _to_dataframe_2(self):
         try:
-            self.df3 = pd.DataFrame() #dataframe com os preços dos itens no corpo da página
+            self.df3 = pd.DataFrame() #dataframe with items prices on page body
             self.df3['Nome do produto'] = [self.products3[i].text for i in range(len(self.products3))]
             self.df3['Preço (R$)'] = [self.prices3[i].text for i in range(len(self.prices3))]
             self.df3['Preço (R$)'] = self.df3['Preço (R$)'].apply(lambda x: x.replace('R$', ''))
@@ -144,7 +127,7 @@ class GSBot:
     
     def _print(self):
         print(self.dataframe)
-        print('Nome do arquivo gerado: {}'.format(self.now))
+        print('Name of the file created: {}'.format(self.now))
 
     def _quit(self):
         self.driver.quit()
@@ -156,7 +139,7 @@ class GSBot:
         self._create_filename()
         i = 0
         while i < self.num_pages:
-            print('Coletando dados da página {}'.format(i + 1))
+            print('Collecting data from page {}'.format(i + 1))
             self._scraping_top_and_bottom()
             self._scraping_body()
             self._to_dataframe()
@@ -166,10 +149,10 @@ class GSBot:
             try:
                 self._next_page()
             except:
-                print('Dados coletados.')
+                print('Data collected.')
                 break
             i += 1
-        print('Dados coletados.')
+        print('Data collected.')
         self._save_to_csv()
         self._print()
         self._quit()
