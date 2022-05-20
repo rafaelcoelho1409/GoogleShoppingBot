@@ -1,15 +1,15 @@
-# Web Scraping com Selenium para coletar preços de produtos no Google Shopping
+# Web Scraping with Selenium to collect product prices on Google Shopping
 
-## Objetivo deste bot:
-- Armazenar em uma tabela os produtos, preços, lojas e links de cada item que aparece em uma pesquisa no Google Shopping. Por exemplo, se você deseja pesquisar preços de celulares, basta digitar 'celulares' como termo de pesquisa no terminal de comando após executar o script python.
+## Purpose:
+- Store into a data table products, prices, shops and links from each item displayed in a search on Google Shopping. For example, if you want to search smartphone prices, it's enough to type 'smartphones' as a search term on command terminal after executing Python script.
 
-## Recursos utilizados:
+## Resources:
 - Webdriver: ChromeDriver (Chrome)
 - Visual Studio Code
 - python3.8
-- pip3: gerenciador de pacotes python3.x
+- pip3: python3.x packages manager
 
-## Pacotes do Python usados para construir o bot:
+## Python packages used to build the bot:
 - Selenium Webdriver (selenium)
 - Webdriver Manager (webdriver_manager)
 - time
@@ -17,54 +17,54 @@
 - datetime
 - os
 
-## Para rodar este bot em sua máquina:
-- baixe este repositório (pasta) em sua máquina. Você pode usar o seguinte comando no seu terminal de comando:
+## Running this bot on a local machine:
+- clone this repo in your machine:  
 > git clone https://github.com/rafaelcoelho1409/GoogleShoppingBot.git
 
-- escolha seu interpretador Python (python3, python3.x)
+- choose a Python interpreter (python3.x)
 
-- execute os seguintes comandos (para Linux):
+- execute the following commands (for Linux):
 > cd GoogleShoppingBot  
 > python3 GoogleShoppingBot.py
 
-## Executando o bot em Docker (para Linux):
-- Instale o docker em sua máquina local. Tutorial de instalação no site abaixo:
+## Running this bot on Docker (for Linux):
+- Install Docker in your local machine. Installation tutorial in the link below:
 > https://docs.docker.com/engine/install/
 
-<h2> Execute os seguintes comandos no seu terminal: </h2>
-- Construa a imagem Docker a partir do Dockerfile desta pasta:
+<h2> Execute the following commands in your terminal: </h2>
+- Build a Docker image from Dockerfile in this repo:  
 > sudo docker build -t gsbot:v1 .
 
-- Execute um novo contâiner a partir da imagem criada com o volume criado anexado a este contâiner:
+- Run a new container from the created image:
 > sudo docker container run -it --name gsbot gsbot:v1
 
-- Digite a pesquisa que você deseja fazer (exemplo: samsung galaxy s21) e dê ENTER
+- Type the search term you want to do (example: samsung galaxy s21) and click ENTER
 
-- Digite o número de páginas da pesquisa do google que você deseja que o bot faça a coleta dos produtos e preços
+- Type the number of pages from google search you want to the bot collecting products and prices
 
-- Copie o nome do arquivo gerado ao fim da execução (ARQUIVO_CSV)
+- Copy the file name created in the end of the running (CSV_FILE)
 
-- Após isso, para poder abrir os arquivos em sua máquina local:
-> sudo docker container ls -a #copie o CONTAINER_ID do contâiner chamado 'gsbot'  
-> sudo docker cp CONTAINER_ID:/home/seluser/'ARQUIVO_CSV' .  
-(ex: sudo docker cp d5f466d18766:/home/seluser/'pe_de_cabra-2021-11-08 21:35:55.679724.csv' .)  
-> sudo -s #abre o modo root para acessar os arquivos  
+- After, to open files in your local machine:
+> sudo docker container ls -a #copy the CONTAINER_ID from container called 'gsbot'  
+> sudo docker cp CONTAINER_ID:/home/seluser/'CSV_FILE' .  
+(ex: sudo docker cp d5f466d18766:/home/seluser/'smartphone-2021-11-08 21:35:55.679724.csv' .)  
+> sudo -s #open root mode to access files  
 > cd seluser  
-> ls #liste a pasta seluser para visualizar os arquivos dentro  
-Copie o nome do arquivo csv (ARQUIVO_CSV) que aparece nessa listagem  
-> libreoffice ARQUIVO_CSV (ex: cama_elastica.csv) #Abre a tabela em csv no LibreOffice  
-> #dê CTRL-D para sair do modo root
+> ls #list 'seluser' folder files to see files into  
+Copy the csv file name (CSV_FILE) that is in the list from 'ls' command  
+> libreoffice CSV_FILE (example: smartphone.csv) #Open the CSV table on LibreOffice  
+> #Type CTRL-D to exit root mode
 
-- Caso precise deletar o csv extraído do contâiner 'gsbot':
-> sudo -s #modo root  
-> rm -r ARQUIVO_CSV #deleta o arquivo csv vindo do contâiner
-> #dê CTRL-D para sair do modo root
+- In the case you need to delete the CSV file extracted from 'gsbot' container:
+> sudo -s #root mode  
+> rm -r CSV_FILE #deletes the csv file from the container
+> #Type CTRL-D to exit root mode
 
-- Para executar o bot novamente no mesmo contâiner:
+- To run this bot again in the same container:
 > sudo docker container start gsbot  
 > sudo docker container exec -it gsbot python3 GoogleShoppingBot.py
 
-- Para deletar o contâiner:
+- To delete this container:
 > sudo docker container stop gsbot  
 > sudo docker container rm gsbot
 
