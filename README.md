@@ -32,6 +32,7 @@
 > https://docs.docker.com/engine/install/
 
 <h2> Execute the following commands in your terminal: </h2>  
+  
 - Build a Docker image from Dockerfile in this repo:  
 > sudo docker build -t gsbot:v1 .
 
